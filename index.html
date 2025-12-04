@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Algostruct - Algorithm Visualizer</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>AlgoStruct Visualizer</header>
+    
+    <div id="tabs">
+        <button class="tab-btn active" onclick="switchTab('search', event)">Search Algorithms</button>
+        <button class="tab-btn" onclick="switchTab('sort', event)">Sorting Algorithms</button>
+        <button class="tab-btn" onclick="switchTab('ds', event)">Data Structures</button>
+    </div>
+
+    <div id="search-section" class="tab-content active">
+        <label for="dataInput">Enter array elements (comma separated):</label>
+        <input type="text" id="dataInput" placeholder="e.g. 5,3,8,6,1,9">
+
+        <label for="algorithmSelect">Select Search Algorithm:</label>
+        <select id="algorithmSelect">
+            <option value="linear">Linear Search</option>
+            <option value="binary">Binary Search (array will be sorted for visualization)</option>
+        </select>
+
+        <label for="targetInput">Enter target value to search:</label>
+        <input type="text" id="targetInput" placeholder="e.g. 6">
+
+        <button id="startBtn">Start Search</button>
+
+        <div id="visualization" class="visualization"></div>
+        <div id="message"></div>
+    </div>
+
+    <div id="sort-section" class="tab-content">
+        <label for="sortDataInput">Enter array elements (comma separated):</label>
+        <input type="text" id="sortDataInput" placeholder="e.g. 5,3,8,6,1,9">
+
+        <label for="sortAlgorithmSelect">Select Sorting Algorithm:</label>
+        <select id="sortAlgorithmSelect">
+            <option value="selection">Selection Sort</option>
+            <option value="insertion">Insertion Sort</option>
+            <option value="merge">Merge Sort</option>
+        </select>
+
+        <button id="startSortBtn">Start Sorting</button>
+
+        <div id="sortVisualization" class="visualization"></div>
+        <div id="sortMessage"></div>
+    </div>
+
+    <div id="ds-section" class="tab-content">
+        <label for="dsTypeSelect">Select Data Structure:</label>
+        <select id="dsTypeSelect" onchange="switchDS()">
+            <option value="singly">Singly Linked List</option>
+            <option value="doubly">Doubly Linked List</option>
+            <option value="stack">Stack</option>
+            <option value="queue">Queue</option>
+            <option value="tree">Binary Tree</option>
+        </select>
+
+        <div id="singly-operations" class="operation-group active">
+            <label for="singlyOpSelect">Select Operation:</label>
+            <select id="singlyOpSelect">
+                <option value="get">Get (by index)</option>
+                <option value="set">Set (by index, new value)</option>
+                <option value="insert">Insert (at index, value) / Append (no index)</option>
+                <option value="unshift">Unshift (add to beginning)</option>
+                <option value="remove">Remove (by index)</option>
+            </select>
+            <label for="singlyIndexInput">Index:</label>
+            <input type="text" id="singlyIndexInput" placeholder="Index">
+            <label for="singlyValueInput">Value:</label>
+            <input type="text" id="singlyValueInput" placeholder="Value (for set/insert)">
+            <button id="singlyBtn">Perform Operation</button>
+            <button id="singlyReverseBtn">Reverse</button>
+            <button id="singlyResetBtn">Reset</button>
+        </div>
+
+        <div id="doubly-operations" class="operation-group">
+            <label for="doublyOpSelect">Select Operation:</label>
+            <select id="doublyOpSelect">
+                <option value="get">Get (by index)</option>
+                <option value="set">Set (by index, new value)</option>
+                <option value="insert">Insert (at index, value) / Append (no index)</option>
+                <option value="unshift">Unshift (add to beginning)</option>
+                <option value="remove">Remove (by index)</option>
+            </select>
+            <label for="doublyIndexInput">Index:</label>
+            <input type="text" id="doublyIndexInput" placeholder="Index">
+            <label for="doublyValueInput">Value:</label>
+            <input type="text" id="doublyValueInput" placeholder="Value (for set/insert)">
+            <button id="doublyBtn">Perform Operation</button>
+            <button id="doublyReverseBtn">Reverse</button>
+            <button id="doublyResetBtn">Reset</button>
+        </div>
+
+        <div id="stack-operations" class="operation-group">
+            <label for="stackValueInput">Value:</label>
+            <input type="text" id="stackValueInput" placeholder="Value for push">
+            <button id="stackPushBtn">Push</button>
+            <button id="stackPopBtn">Pop</button>
+            <button id="stackTopBtn">Top</button>
+            <button id="stackResetBtn">Reset</button>
+        </div>
+
+        <div id="queue-operations" class="operation-group">
+            <label for="queueValueInput">Value:</label>
+            <input type="text" id="queueValueInput" placeholder="Value for enqueue">
+            <button id="queueEnqueueBtn">Enqueue</button>
+            <button id="queueDequeueBtn">Dequeue</button>
+            <button id="queueRearBtn">Rear</button>
+            <button id="queuePeekBtn">Peek</button>
+            <button id="queueResetBtn">Reset</button>
+        </div>
+
+        <div id="tree-operations" class="operation-group">
+            <label for="treeValueInput">Value:</label>
+            <input type="text" id="treeValueInput" placeholder="Value for insert/remove">
+            <button id="treeInsertBtn">Insert</button>
+            <button id="treeRemoveBtn">Remove</button>
+            <button id="treeInorderBtn">Traverse (Inorder)</button>
+            <button id="treePreorderBtn">Traverse (Preorder)</button>
+            <button id="treePostorderBtn">Traverse (Postorder)</button>
+            <button id="treeResetBtn">Reset</button>
+        </div>
+
+        <div id="dsVisualization" class="visualization"></div>
+        <div id="dsMessage"></div>
+    </div>
+
+    <script src="searching.js"></script>
+    <script src="sorting.js"></script>
+    <script src="utils.js"></script>
+    <script src="linkedlists.js"></script>
+    <script src="stack.js"></script>
+    <script src="queue.js"></script>
+    <script src="tree.js"></script>
+    <script src="main.js"></script>
+</body>
+</html>
